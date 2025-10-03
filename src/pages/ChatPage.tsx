@@ -53,6 +53,9 @@ export default function UKChatApp() {
       "*",
       function (e) {
         if (e.action == "create") {
+          if (e.record.userId == pb.authStore.record?.id) {
+            return;
+          }
           setMessages((prev) => [
             ...prev,
             {
@@ -81,11 +84,7 @@ export default function UKChatApp() {
     if (!newMessage.trim() || !currentUser) return;
 
     try {
-      await pb.collection("messages").create({
-        text: newMessage,
-        userId: currentUser.id,
-      });
-      setNewMessage("");
+      const _txt = newMessage;
       setMessages([
         ...messages,
         {
@@ -95,6 +94,12 @@ export default function UKChatApp() {
           userId: currentUser.id,
         },
       ]);
+      setNewMessage("");
+      await pb.collection("messages").create({
+        text: _txt,
+        userId: currentUser.id,
+      });
+      ("");
     } catch (error) {
       console.error("Error sending message:", error);
     }
