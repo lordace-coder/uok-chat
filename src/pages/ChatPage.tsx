@@ -56,16 +56,23 @@ export default function UKChatApp() {
           if (e.record.userId == pb.authStore.record?.id) {
             return;
           }
-          setMessages((prev) => [
-            ...prev,
-            {
-              created: e.record.created,
-              id: e.record.id,
-              text: e.record.text,
-              userId: e.record.userId,
-              expand: e.record.expand, // keep expand if you need
-            },
-          ]);
+          setMessages((prev) => {
+            // Check if the message already exists
+            const exists = prev.some((msg) => msg.id === e.record.id);
+            if (exists) return prev; // Don't add duplicates
+
+            // Add the new message
+            return [
+              ...prev,
+              {
+                created: e.record.created,
+                id: e.record.id,
+                text: e.record.text,
+                userId: e.record.userId,
+                expand: e.record.expand,
+              },
+            ];
+          });
         }
       },
       {
