@@ -169,12 +169,11 @@ export default function App() {
               </label>
               <input
                 type="text"
-                defaultValue={name}
+                value={name}
                 onChange={(e) => {
                   setName(e.target.value);
                   setError(null);
                 }}
-                
                 onKeyPress={(e) => e.key === "Enter" && handleSignup()}
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150"
                 placeholder="Confirm your password"
@@ -189,7 +188,7 @@ export default function App() {
             </label>
             <input
               type="email"
-              defaultValue={email}
+              value={email}
               onChange={(e) => {
                 setEmail(e.target.value);
                 setError(null);
@@ -207,7 +206,7 @@ export default function App() {
             </label>
             <input
               type="password"
-              defaultValue={password}
+              value={password}
               onChange={(e) => {
                 setPassword(e.target.value);
                 setError(null);
@@ -230,7 +229,7 @@ export default function App() {
               </label>
               <input
                 type="password"
-                defaultValue={passwordConfirm}
+                value={passwordConfirm}
                 onChange={(e) => {
                   setPasswordConfirm(e.target.value);
                   setError(null);
