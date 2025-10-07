@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { MessageSquare, UserPlus, LogIn } from "lucide-react";
+import { MessageSquare, UserPlus, LogIn, Sparkles } from "lucide-react";
 import { pb } from "../lib/pocketbase";
 
 // --- TYPESCRIPT INTERFACES ---
@@ -31,14 +31,6 @@ interface PocketBaseError {
     };
   };
 }
-
-// --- POCKETBASE SIMULATION (In a real app, you would configure and import your client) ---
-
-/**
- * NOTE: In a production environment, this 'pb' object would be imported
- * from your PocketBase setup file. This structure simulates the PocketBase
- * client methods used for this component, ensuring they match our defined types.
- */
 
 // --- UTILITY FUNCTION ---
 
@@ -139,32 +131,46 @@ export default function App() {
   const currentButtonText = isLoginView ? "Sign In" : "Sign Up";
 
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4 font-inter">
-      <div className="bg-white border border-gray-200 rounded-2xl shadow-xl p-8 w-full max-w-md">
+    <div className="min-h-screen bg-gradient-to-br from-pink-100 via-purple-50 to-pink-200 flex items-center justify-center p-4 font-inter relative overflow-hidden">
+      {/* Animated background elements */}
+      <div className="absolute top-20 left-10 w-72 h-72 bg-pink-300 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-pulse"></div>
+      <div
+        className="absolute bottom-20 right-10 w-72 h-72 bg-purple-300 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-pulse"
+        style={{ animationDelay: "2s" }}
+      ></div>
+      <div
+        className="absolute top-1/2 left-1/2 w-72 h-72 bg-rose-300 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-pulse"
+        style={{ animationDelay: "4s" }}
+      ></div>
+
+      <div className="bg-white/80 backdrop-blur-lg border border-pink-200/50 rounded-3xl shadow-2xl p-8 w-full max-w-md relative z-10">
         {/* Header */}
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-14 h-14 bg-blue-600 rounded-full mb-4 shadow-lg transition duration-300 transform hover:scale-105">
-            <MessageSquare className="w-7 h-7 text-white" />
+          <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-pink-500 via-rose-500 to-purple-500 rounded-2xl mb-4 shadow-lg transition duration-300 transform hover:scale-110 hover:rotate-3">
+            <MessageSquare className="w-8 h-8 text-white" />
           </div>
-          <h1 className="text-2xl font-extrabold text-gray-900 mb-1">
-            {currentTitle}
-          </h1>
-          <p className="text-sm text-gray-500">{currentSubtitle}</p>
+          <div className="flex items-center justify-center gap-2 mb-2">
+            <h1 className="text-3xl font-extrabold bg-gradient-to-r from-pink-600 via-rose-600 to-purple-600 bg-clip-text text-transparent">
+              {currentTitle}
+            </h1>
+            <Sparkles className="w-5 h-5 text-pink-500 animate-pulse" />
+          </div>
+          <p className="text-sm text-gray-600 font-medium">{currentSubtitle}</p>
         </div>
 
         {/* Error Message */}
         {error && (
-          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg mb-4 text-sm font-medium transition duration-300 ease-in-out transform hover:scale-[1.01]">
+          <div className="bg-gradient-to-r from-rose-50 to-pink-50 border border-rose-300 text-rose-700 px-4 py-3 rounded-xl mb-4 text-sm font-medium transition duration-300 ease-in-out transform hover:scale-[1.02] shadow-sm">
             {error}
           </div>
         )}
 
         {/* Form Fields */}
         <div className="space-y-4">
-          {/* username  Field (Only for Signup) */}
+          {/* username Field (Only for Signup) */}
           {!isLoginView && (
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-semibold text-gray-700 mb-2">
                 Username
               </label>
               <input
@@ -175,15 +181,15 @@ export default function App() {
                   setError(null);
                 }}
                 onKeyPress={(e) => e.key === "Enter" && handleSignup()}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150"
-                placeholder="Confirm your password"
+                className="w-full px-4 py-3 border-2 border-pink-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-pink-400 focus:border-pink-400 transition duration-200 bg-white/50 backdrop-blur-sm hover:border-pink-300"
+                placeholder="Enter your username"
                 disabled={isLoading}
               />
             </div>
           )}
           {/* Email Field */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-semibold text-gray-700 mb-2">
               Email (uok.ac.rw)
             </label>
             <input
@@ -193,7 +199,7 @@ export default function App() {
                 setEmail(e.target.value);
                 setError(null);
               }}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150"
+              className="w-full px-4 py-3 border-2 border-pink-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-pink-400 focus:border-pink-400 transition duration-200 bg-white/50 backdrop-blur-sm hover:border-pink-300"
               placeholder="your.email@uok.ac.rw"
               disabled={isLoading}
             />
@@ -201,7 +207,7 @@ export default function App() {
 
           {/* Password Field */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-semibold text-gray-700 mb-2">
               Password
             </label>
             <input
@@ -215,7 +221,7 @@ export default function App() {
                 e.key === "Enter" &&
                 (isLoginView ? handleLogin() : handleSignup())
               }
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150"
+              className="w-full px-4 py-3 border-2 border-pink-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-pink-400 focus:border-pink-400 transition duration-200 bg-white/50 backdrop-blur-sm hover:border-pink-300"
               placeholder="Enter your password"
               disabled={isLoading}
             />
@@ -224,7 +230,7 @@ export default function App() {
           {/* Password Confirm Field (Only for Signup) */}
           {!isLoginView && (
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-semibold text-gray-700 mb-2">
                 Confirm Password
               </label>
               <input
@@ -235,7 +241,7 @@ export default function App() {
                   setError(null);
                 }}
                 onKeyPress={(e) => e.key === "Enter" && handleSignup()}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150"
+                className="w-full px-4 py-3 border-2 border-pink-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-pink-400 focus:border-pink-400 transition duration-200 bg-white/50 backdrop-blur-sm hover:border-pink-300"
                 placeholder="Confirm your password"
                 disabled={isLoading}
               />
@@ -245,7 +251,7 @@ export default function App() {
           {/* Main Action Button */}
           <button
             onClick={isLoginView ? handleLogin : handleSignup}
-            className="w-full flex justify-center items-center gap-2 bg-blue-600 text-white py-2.5 rounded-lg font-bold hover:bg-blue-700 transition duration-200 transform hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:bg-blue-400"
+            className="w-full flex justify-center items-center gap-2 bg-gradient-to-r from-pink-500 via-rose-500 to-purple-500 text-white py-3.5 rounded-xl font-bold hover:from-pink-600 hover:via-rose-600 hover:to-purple-600 transition duration-300 transform hover:shadow-xl hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-pink-400 focus:ring-offset-2 disabled:opacity-60 disabled:cursor-not-allowed shadow-lg"
             disabled={isLoading}
           >
             {isLoading ? (
@@ -286,7 +292,7 @@ export default function App() {
         </div>
 
         {/* Switch Mode Link */}
-        <p className="text-center text-sm text-gray-500 mt-6">
+        <p className="text-center text-sm text-gray-600 mt-6">
           {isLoginView ? "Don't have an account?" : "Already have an account?"}
           <button
             onClick={() => {
@@ -295,8 +301,9 @@ export default function App() {
               setEmail("");
               setPassword("");
               setPasswordConfirm("");
+              setName("");
             }}
-            className="text-blue-600 font-semibold ml-1 hover:text-blue-800 transition duration-150 focus:outline-none"
+            className="text-pink-600 font-bold ml-1 hover:text-pink-700 transition duration-150 focus:outline-none hover:underline decoration-2 underline-offset-2"
             disabled={isLoading}
           >
             {isLoginView ? "Sign Up" : "Sign In"}
